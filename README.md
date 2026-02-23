@@ -144,6 +144,7 @@ No extra UI framework; Tailwind + custom tokens and components only.
 
 - [Architecture overview](docs/architecture/overview.md)
 - [Information architecture](docs/ui-ux/ia.md)
+- [Design system](docs/ui-ux/design-system.md)
 - [Local development & infra](docs/infra/local-dev.md)
 - [ADRs](docs/adr/) — Architecture decision records
 

@@ -32,10 +32,12 @@ export default <Partial<Config>>{
         lg: "12px"
       },
       boxShadow: {
-        soft: "0 1px 2px rgba(15, 23, 42, 0.06)",
-        card: "0 8px 24px rgba(15, 23, 42, 0.10)",
-        elevated: "0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 10px 20px -5px rgba(15, 23, 42, 0.08)",
-        glow: "0 0 0 1px rgba(47, 128, 237, 0.15), 0 0 24px -4px rgba(47, 128, 237, 0.12)"
+        soft: "0 1px 2px rgba(0, 0, 0, 0.2)",
+        card: "0 8px 24px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(96, 165, 250, 0.08)",
+        elevated:
+          "0 4px 12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(96, 165, 250, 0.08), 0 0 24px -8px rgba(96, 165, 250, 0.12)",
+        glow: "0 0 0 1px rgba(96, 165, 250, 0.2), 0 0 24px -4px rgba(96, 165, 250, 0.25)",
+        "glow-sm": "0 0 12px -4px rgba(96, 165, 250, 0.2)"
       }
     }
   }

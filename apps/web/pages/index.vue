@@ -4,7 +4,7 @@
       <div>
         <div class="flex items-center gap-2">
           <h1 class="pk-h1">Dashboard</h1>
-          <span class="pk-chip text-[10px] font-medium uppercase tracking-wider">Live</span>
+          <span class="pk-chip text-[10px] font-medium uppercase tracking-wider text-brand-accent border-brand-accent/50 shadow-glow-sm">Live</span>
         </div>
         <p class="pk-subtle mt-1">Collection totals, recent adds, alerts. Keep it fast.</p>
       </div>

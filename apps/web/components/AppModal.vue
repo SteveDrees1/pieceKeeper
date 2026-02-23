@@ -10,13 +10,15 @@
       @keydown.escape="close"
     >
       <div
-        class="absolute inset-0 bg-text/40 backdrop-blur-sm"
+        class="absolute inset-0 bg-black/70 backdrop-blur-md"
         aria-hidden="true"
         @click="close"
       />
       <div
         ref="dialogRef"
-        class="relative z-10 w-full max-w-lg rounded-xl border border-border bg-surface shadow-elevated focus:outline-none"
+        class="relative z-10 w-full rounded-xl border border-border bg-surface focus:outline-none"
+        :class="size === 'lg' ? 'max-w-xl' : 'max-w-lg'"
+        style="box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(96, 165, 250, 0.1), 0 0 40px -12px rgba(96, 165, 250, 0.15);"
         tabindex="-1"
         @click.stop
       >
@@ -31,8 +33,9 @@ const props = withDefaults(
   defineProps<{
     modelValue: boolean;
     labelledby?: string;
+    size?: "default" | "lg";
   }>(),
-  { labelledby: undefined }
+  { labelledby: undefined, size: "default" }
 );
 
 const emit = defineEmits<{
@@ -47,7 +50,7 @@ function close() {
 
 watch(
   () => props.modelValue,
-  (open) => {
+  (open: boolean) => {
     if (open) {
       nextTick(() => {
         dialogRef.value?.focus();

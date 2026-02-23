@@ -1,6 +1,6 @@
 <template>
-  <div class="flex min-h-screen flex-col bg-bg font-sans antialiased">
-    <header class="sticky top-0 z-50 border-b border-border bg-surface/95 shadow-soft backdrop-blur-sm safe-area-pad-x">
+  <div class="flex h-screen flex-col overflow-hidden bg-bg font-sans antialiased">
+    <header class="shrink-0 border-b border-border bg-surface/98 shadow-soft backdrop-blur-md safe-area-pad-x z-50" style="box-shadow: 0 1px 0 0 rgba(96, 165, 250, 0.08);">
       <div class="pk-container flex flex-wrap items-center justify-between gap-3 py-3 sm:gap-4 sm:py-3">
         <div class="flex min-w-0 flex-1 items-center gap-3 sm:flex-initial">
           <NuxtLink to="/" class="flex items-center gap-3" title="Go to Dashboard">
@@ -42,13 +42,14 @@
 
       <div
         v-if="mobileMenuOpen"
-        class="fixed inset-0 z-40 bg-text/20 backdrop-blur-sm md:hidden"
+        class="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
         aria-hidden="true"
         @click="mobileMenuOpen = false"
       />
       <aside
         v-if="mobileMenuOpen"
         class="fixed right-0 top-0 z-50 flex h-full w-full max-w-sm flex-col border-l border-border bg-surface shadow-elevated safe-area-pad-r md:hidden"
+        style="box-shadow: -4px 0 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(96, 165, 250, 0.06);"
         role="dialog"
         aria-label="Main menu"
       >
@@ -81,7 +82,7 @@
       </aside>
     </header>
 
-    <main class="flex-1 pk-container safe-area-pad-x py-6 sm:py-8">
+    <main class="min-h-0 flex-1 overflow-y-auto pk-container safe-area-pad-x py-6 sm:py-8">
       <ClientOnly>
         <NuxtPage :key="route.fullPath" />
         <template #fallback>
@@ -98,30 +99,30 @@
       </ClientOnly>
     </main>
 
-    <footer class="mt-auto border-t border-border bg-surface safe-area-pad-x" role="contentinfo">
-      <div class="pk-container py-6 sm:py-8">
-        <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
-          <div class="flex flex-col gap-3 sm:gap-4">
-            <p class="pk-subtle text-sm">
+    <footer class="shrink-0 border-t border-border bg-surface safe-area-pad-x" role="contentinfo" style="box-shadow: 0 -1px 0 0 rgba(96, 165, 250, 0.06);">
+      <div class="pk-container py-4 sm:py-5">
+        <div class="flex flex-nowrap items-center justify-between gap-4 text-sm">
+          <div class="flex min-w-0 shrink items-center gap-4">
+            <p class="pk-subtle shrink-0 whitespace-nowrap text-xs sm:text-sm">
               © {{ new Date().getFullYear() }} {{ appName }}. All rights reserved.
             </p>
-            <nav class="flex flex-wrap gap-x-4 gap-y-1 text-sm" aria-label="Footer">
-              <NuxtLink to="/privacy" class="pk-subtle hover:text-text focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40 focus-visible:ring-offset-2 rounded px-1 py-0.5 transition" title="Privacy policy">
+            <nav class="flex shrink-0 items-center gap-3 text-xs sm:text-sm" aria-label="Footer">
+              <NuxtLink to="/privacy" class="pk-subtle hover:text-brand-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-bg rounded px-1 py-0.5 transition whitespace-nowrap" title="Privacy policy">
                 Privacy
               </NuxtLink>
-              <NuxtLink to="/terms" class="pk-subtle hover:text-text focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40 focus-visible:ring-offset-2 rounded px-1 py-0.5 transition" title="Terms of use">
+              <NuxtLink to="/terms" class="pk-subtle hover:text-brand-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-bg rounded px-1 py-0.5 transition whitespace-nowrap" title="Terms of use">
                 Terms
               </NuxtLink>
             </nav>
           </div>
-          <div class="flex flex-col gap-3 sm:items-end">
-            <span class="pk-subtle text-xs font-medium uppercase tracking-wider">Follow us</span>
-            <div class="flex items-center gap-1" aria-label="Social links">
+          <div class="flex shrink-0 items-center gap-2">
+            <span class="pk-subtle whitespace-nowrap text-xs font-medium uppercase tracking-wider">Follow us</span>
+            <div class="flex items-center gap-0.5" aria-label="Social links">
               <a
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex h-11 w-11 items-center justify-center rounded-lg text-muted transition hover:text-brand-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+                class="flex h-9 w-9 items-center justify-center rounded-lg text-muted transition hover:text-brand-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
                 aria-label="Twitter (opens in new window)"
                 title="Follow us on Twitter"
               >
@@ -133,7 +134,7 @@
                 href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex h-11 w-11 items-center justify-center rounded-lg text-muted transition hover:text-brand-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+                class="flex h-9 w-9 items-center justify-center rounded-lg text-muted transition hover:text-brand-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
                 aria-label="GitHub (opens in new window)"
                 title="View our GitHub"
               >
@@ -145,7 +146,7 @@
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex h-11 w-11 items-center justify-center rounded-lg text-muted transition hover:text-brand-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+                class="flex h-9 w-9 items-center justify-center rounded-lg text-muted transition hover:text-brand-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
                 aria-label="Instagram (opens in new window)"
                 title="Follow us on Instagram"
               >

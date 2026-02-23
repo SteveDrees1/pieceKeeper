@@ -1,4 +1,12 @@
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { defineNuxtConfig } from "nuxt/config";
+
+// Load repo-root .env so REBRICKABLE_API_KEY etc. work when running from apps/web
+const rootDir = path.dirname(fileURLToPath(import.meta.url));
+const repoEnv = path.resolve(rootDir, "../../.env");
+const dotenv = await import("dotenv");
+dotenv.config({ path: repoEnv });
 
 export default defineNuxtConfig({
   devtools: { enabled: false },
@@ -17,6 +25,7 @@ export default defineNuxtConfig({
       title: "Piece Keeper",
       meta: [
         { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
+        { name: "theme-color", content: "#0c1423" },
         { name: "description", content: "LEGO collection inventory, pricing, and marketplace." }
       ],
       link: [
@@ -32,6 +41,7 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    rebrickableApiKey: process.env.REBRICKABLE_API_KEY || "",
     public: {
       appName: process.env.APP_NAME || "Piece Keeper",
       meiliHost: process.env.MEILI_HOST || "http://localhost:7700"
