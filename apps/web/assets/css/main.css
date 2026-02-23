@@ -17,6 +17,19 @@
   }
 
   html { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+  a,
+  button,
+  [role="button"],
+  input[type="submit"],
+  input[type="button"],
+  input[type="reset"],
+  select,
+  .pk-btn,
+  .pk-btn-primary,
+  .pk-btn-ghost,
+  .pk-nav-pill {
+    cursor: pointer;
+  }
   body {
     background-color: rgb(var(--bg));
     color: rgb(var(--text));
@@ -35,7 +48,7 @@
   }
 
   .pk-container {
-    @apply mx-auto max-w-6xl px-4 sm:px-6;
+    @apply w-full px-4 sm:px-6 md:px-8;
   }
 
   .pk-card {

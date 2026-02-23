@@ -47,11 +47,15 @@
       <div class="pk-panel pk-card-pad">
         <h2 class="font-display text-sm font-semibold uppercase tracking-wider text-text">Quick actions</h2>
         <div class="mt-4 flex flex-col gap-2">
-          <NuxtLink to="/catalog" class="pk-btn w-full justify-center">Search catalog</NuxtLink>
-          <NuxtLink to="/collection" class="pk-btn-primary w-full justify-center">Add item</NuxtLink>
-          <button type="button" class="pk-btn-ghost w-full justify-center">Import from file</button>
+          <NuxtLink to="/catalog" class="pk-btn w-full justify-center" title="Search sets, parts, and minifigs">Search catalog</NuxtLink>
+          <button type="button" class="pk-btn-primary w-full justify-center" title="Add a new item to your collection" @click="openAddItem">Add item</button>
+          <button type="button" class="pk-btn-ghost w-full justify-center" title="Import items from a file" @click="openImport">Import from file</button>
         </div>
       </div>
     </div>
   </section>
 </template>
+
+<script setup lang="ts">
+const { openAddItem, openImport } = useActionModals();
+</script>

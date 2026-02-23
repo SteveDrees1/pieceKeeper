@@ -7,7 +7,7 @@
 
     <div class="pk-card pk-card-pad space-y-2">
       <label class="text-sm font-medium text-text">Search</label>
-      <input class="pk-input" placeholder="10276, Millennium Falcon, minifig..." />
+      <input class="pk-input" placeholder="10276, Millennium Falcon, minifig..." title="Search by set number, name, or minifig" />
       <div class="flex flex-wrap gap-2">
         <span class="pk-chip">Sets</span>
         <span class="pk-chip">Parts</span>

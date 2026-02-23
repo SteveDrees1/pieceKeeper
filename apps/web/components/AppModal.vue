@@ -1,0 +1,58 @@
+<template>
+  <Teleport to="body">
+    <div
+      v-if="modelValue"
+      class="fixed inset-0 z-[100] flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      :aria-labelledby="labelledby"
+      aria-label="Dialog"
+      @keydown.escape="close"
+    >
+      <div
+        class="absolute inset-0 bg-text/40 backdrop-blur-sm"
+        aria-hidden="true"
+        @click="close"
+      />
+      <div
+        ref="dialogRef"
+        class="relative z-10 w-full max-w-lg rounded-xl border border-border bg-surface shadow-elevated focus:outline-none"
+        tabindex="-1"
+        @click.stop
+      >
+        <slot />
+      </div>
+    </div>
+  </Teleport>
+</template>
+
+<script setup lang="ts">
+const props = withDefaults(
+  defineProps<{
+    modelValue: boolean;
+    labelledby?: string;
+  }>(),
+  { labelledby: undefined }
+);
+
+const emit = defineEmits<{
+  "update:modelValue": [value: boolean];
+}>();
+
+const dialogRef = ref<HTMLElement | null>(null);
+
+function close() {
+  emit("update:modelValue", false);
+}
+
+watch(
+  () => props.modelValue,
+  (open) => {
+    if (open) {
+      nextTick(() => {
+        dialogRef.value?.focus();
+      });
+    }
+  }
+);
+</script>

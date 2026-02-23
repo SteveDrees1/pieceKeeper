@@ -7,11 +7,15 @@
 
     <div class="pk-card pk-card-pad space-y-4">
       <div class="flex flex-wrap gap-2 sm:gap-2">
-        <button type="button" class="pk-btn-primary">Add Item</button>
-        <button type="button" class="pk-btn">Import</button>
-        <button type="button" class="pk-btn">Export</button>
+        <button type="button" class="pk-btn-primary" title="Add a new item to your collection" @click="openAddItem">Add Item</button>
+        <button type="button" class="pk-btn" title="Import items from file or external source" @click="openImport">Import</button>
+        <button type="button" class="pk-btn" title="Export your collection" @click="openExport">Export</button>
       </div>
       <p class="pk-subtle">Wire this to Postgres once the API exists.</p>
     </div>
   </section>
 </template>
+
+<script setup lang="ts">
+const { openAddItem, openImport, openExport } = useActionModals();
+</script>
