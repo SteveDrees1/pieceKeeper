@@ -1,11 +1,11 @@
 <template>
-  <section class="space-y-4 sm:space-y-6">
-    <div>
+  <section class="flex min-h-0 flex-1 flex-col gap-4 sm:gap-6">
+    <div class="shrink-0">
       <h1 class="pk-h1">Catalog</h1>
       <p class="pk-subtle">Search sets, parts, and minifigs via Rebrickable.</p>
     </div>
 
-    <div class="pk-card pk-card-pad space-y-2">
+    <div class="shrink-0 pk-card pk-card-pad space-y-2">
       <label for="catalog-search" class="text-sm font-medium text-text">Search</label>
       <input
         id="catalog-search"
@@ -48,19 +48,23 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
-      <div class="pk-card pk-card-pad lg:col-span-2">
-        <div class="font-display font-medium text-text mb-1">Results</div>
-        <p v-if="!rebrickableConfigured" class="pk-subtle">
+    <div class="grid min-h-0 flex-1 grid-cols-1 gap-4 lg:grid-cols-3">
+      <div class="flex min-h-0 flex-col pk-card pk-card-pad lg:col-span-2">
+        <div class="shrink-0 font-display font-medium text-text mb-1">Results</div>
+        <p v-if="!rebrickableConfigured" class="pk-subtle shrink-0">
           Add <code class="rounded bg-border px-1 py-0.5 text-xs">REBRICKABLE_API_KEY</code> to your <code class="rounded bg-border px-1 py-0.5 text-xs">.env</code> and restart. Get a key at
           <a href="https://rebrickable.com/api/v3/docs/" target="_blank" rel="noopener noreferrer" class="text-brand-accent underline">Rebrickable</a>.
         </p>
-        <p v-else-if="error" class="text-brand-primary text-sm">{{ error.message }}</p>
-        <div v-else-if="pending && results.length === 0" class="pk-subtle py-4">Searching…</div>
-        <div v-else-if="results.length === 0" class="pk-subtle py-4">
+        <p v-else-if="error" class="shrink-0 text-brand-primary text-sm">{{ error.message }}</p>
+        <div v-else-if="pending && results.length === 0" class="pk-subtle shrink-0 py-4">Searching…</div>
+        <div v-else-if="results.length === 0" class="pk-subtle shrink-0 py-4">
           {{ searchQuery ? "No results. Try a different search or type." : "Enter a search or browse by type." }}
         </div>
-        <ul v-else class="mt-2 space-y-2" aria-label="Catalog results">
+        <ul
+          v-else
+          class="mt-2 min-h-0 flex-1 space-y-2 overflow-y-auto"
+          aria-label="Catalog results"
+        >
           <li
             v-for="(item, i) in results"
             :key="itemKey(item, i)"
@@ -85,7 +89,7 @@
             </div>
           </li>
         </ul>
-        <div v-if="results.length > 0" class="mt-4 flex flex-wrap items-center justify-between gap-3">
+        <div v-if="results.length > 0" class="mt-4 flex shrink-0 flex-wrap items-center justify-between gap-3">
           <span class="pk-subtle text-sm">{{ totalCount }} result{{ totalCount !== 1 ? 's' : '' }}</span>
           <nav
             class="flex w-full min-w-0 max-w-sm items-center justify-between gap-1 sm:w-auto sm:max-w-none sm:gap-2"

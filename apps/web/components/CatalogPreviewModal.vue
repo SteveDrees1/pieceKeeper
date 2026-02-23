@@ -21,14 +21,10 @@
           <p class="pk-subtle">Select an item to preview.</p>
         </template>
         <template v-else>
-          <!-- Loading: skeleton record -->
-          <div v-if="pending" class="catalog-preview__skeleton" aria-busy="true">
-            <div class="catalog-preview__skeleton-image" />
-            <div class="catalog-preview__skeleton-fields">
-              <div class="catalog-preview__skeleton-line w-3/4" />
-              <div class="catalog-preview__skeleton-line w-1/2" />
-              <div class="catalog-preview__skeleton-line w-2/3" />
-            </div>
+          <!-- Loading: spinning loader -->
+          <div v-if="pending" class="catalog-preview__loading" aria-busy="true" role="status">
+            <span class="pk-spinner" aria-hidden="true" />
+            <span class="catalog-preview__loading-text">Loading…</span>
           </div>
 
           <p v-else-if="detailError" class="catalog-preview__error">
@@ -302,50 +298,19 @@ const hasAttributes = computed(() => {
   padding: 1.25rem 1.25rem 1.5rem;
 }
 
-/* Skeleton */
-.catalog-preview__skeleton {
-  display: flex;
-  gap: 1.25rem;
-  align-items: flex-start;
-}
-
-.catalog-preview__skeleton-image {
-  width: 7rem;
-  height: 7rem;
-  flex-shrink: 0;
-  border-radius: 0.75rem;
-  background: linear-gradient(90deg, var(--preview-bg) 25%, rgb(var(--border) / 0.6) 50%, var(--preview-bg) 75%);
-  background-size: 200% 100%;
-  animation: catalog-preview-shimmer 1.2s ease-in-out infinite;
-}
-
-.catalog-preview__skeleton-fields {
-  flex: 1;
-  min-width: 0;
+/* Loading (spinner) */
+.catalog-preview__loading {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
 }
 
-.catalog-preview__skeleton-line {
-  height: 0.875rem;
-  border-radius: 0.25rem;
-  background: linear-gradient(90deg, var(--preview-bg) 25%, rgb(var(--border) / 0.6) 50%, var(--preview-bg) 75%);
-  background-size: 200% 100%;
-  animation: catalog-preview-shimmer 1.2s ease-in-out infinite;
-}
-
-.catalog-preview__skeleton-line:nth-child(2) {
-  animation-delay: 0.15s;
-}
-
-.catalog-preview__skeleton-line:nth-child(3) {
-  animation-delay: 0.3s;
-}
-
-@keyframes catalog-preview-shimmer {
-  from { background-position: 200% 0; }
-  to { background-position: -200% 0; }
+.catalog-preview__loading-text {
+  font-size: 0.875rem;
+  color: var(--preview-muted);
 }
 
 /* Error */

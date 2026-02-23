@@ -82,9 +82,23 @@
       </aside>
     </header>
 
-    <main class="min-h-0 flex-1 overflow-y-auto pk-container safe-area-pad-x py-6 sm:py-8">
+    <main class="relative flex min-h-0 flex-1 flex-col overflow-hidden pk-container safe-area-pad-x py-6 sm:py-8">
+      <Transition name="route-loading">
+        <div
+          v-if="isRouteChanging"
+          class="absolute inset-0 z-30 flex items-center justify-center rounded-xl bg-bg/80 backdrop-blur-sm"
+          aria-live="polite"
+          aria-busy="true"
+          role="status"
+        >
+          <span class="pk-spinner" aria-hidden="true" />
+          <span class="sr-only">Loading page…</span>
+        </div>
+      </Transition>
       <ClientOnly>
-        <NuxtPage :key="route.fullPath" />
+        <div class="flex min-h-full min-w-0 flex-1 flex-col">
+          <NuxtPage :key="route.fullPath" />
+        </div>
         <template #fallback>
           <div class="animate-pulse space-y-6" role="status" aria-label="Loading">
             <div class="h-8 w-48 rounded bg-border" />
@@ -175,10 +189,35 @@
 <script setup lang="ts">
 const appName = useRuntimeConfig().public.appName;
 const route = useRoute();
+const router = useRouter();
 const mobileMenuOpen = ref(false);
+const isRouteChanging = ref(false);
 const { addItemOpen, importOpen, exportOpen, openAddItem, openImport, openExport, closeAddItem, closeImport, closeExport } = useActionModals();
+
+router.beforeEach((_to, from) => {
+  if (from.matched.length > 0) isRouteChanging.value = true;
+});
+
+router.afterEach(() => {
+  isRouteChanging.value = false;
+});
+
+router.onError(() => {
+  isRouteChanging.value = false;
+});
 
 watch(() => route.fullPath, () => {
   mobileMenuOpen.value = false;
 });
 </script>
+
+<style scoped>
+.route-loading-enter-active,
+.route-loading-leave-active {
+  transition: opacity 0.15s ease;
+}
+.route-loading-enter-from,
+.route-loading-leave-to {
+  opacity: 0;
+}
+</style>
