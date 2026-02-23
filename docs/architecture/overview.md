@@ -6,10 +6,10 @@ A LEGO collection manager that can evolve into pricing and marketplace features 
 
 ## MVP boundaries
 
-- **Catalog** — Ingestion (Rebrickable-backed), search (Meilisearch)
-- **User collection** — CRUD for owned items, quantities, condition, locations
-- **Import** — Pipeline (e.g. CSV): upload → map → preview → commit
-- **Search** — Fast full-text via Meilisearch
+- **Catalog** — Rebrickable-backed: list/detail proxy in Nuxt server API (`/api/catalog/sets`, `parts`, `minifigs` and `/:id`). Search UI and preview modal in place. Meilisearch later for full-text when needed.
+- **User collection** — CRUD for owned items, quantities, condition, locations (API to be added).
+- **Import** — Pipeline (e.g. CSV): upload → map → preview → commit (to be implemented).
+- **Search** — Catalog search via Rebrickable; fast full-text via Meilisearch when wired.
 
 ## Tech stack
 
@@ -41,18 +41,19 @@ Health check: `pnpm health` (see [Local dev](../infra/local-dev.md)).
 
 ```
 pieceKeeper/
-├── apps/web/           # Nuxt 3 app
-│   ├── assets/css/     # Global styles, design tokens, component primitives
-│   ├── components/     # Vue components (LogoMark, AppModal, AppTooltip, etc.)
-│   ├── composables/    # useActionModals, etc.
-│   ├── pages/          # File-based routes (index, catalog, collection, lists)
-│   ├── app.vue         # Root layout (header, main, footer)
+├── apps/web/              # Nuxt 3 app
+│   ├── assets/css/        # Global styles, design tokens, scrollbar, .pk-spinner
+│   ├── components/        # LogoMark, AppModal, CatalogPreviewModal, modal contents
+│   ├── composables/       # useActionModals, useCatalogSearch
+│   ├── pages/             # File-based routes (index, catalog, collection, lists)
+│   ├── server/api/catalog/# Rebrickable proxy (sets, parts, minifigs list + detail)
+│   ├── app.vue            # Root layout (sticky header, scrollable main, sticky footer)
 │   ├── nuxt.config.ts
 │   └── tailwind.config.ts
-├── docs/               # This documentation
-├── scripts/            # healthcheck.mjs
-├── docker-compose.yml  # Postgres, Redis, Meilisearch, MinIO
-├── package.json        # Workspace root; pnpm scripts
+├── docs/                  # This documentation
+├── scripts/               # healthcheck.mjs
+├── docker-compose.yml     # Postgres, Redis, Meilisearch, MinIO
+├── package.json           # Workspace root; pnpm scripts
 └── pnpm-workspace.yaml
 ```
 

@@ -56,27 +56,34 @@ Defined in `main.css`; use Tailwind for spacing and layout alongside these.
 | `.pk-chip` | Pill: rounded-full, border, surface, muted text |
 | `.pk-nav-pill` | Nav link: rounded-lg, hover/active states |
 | `.pk-nav-pill-mobile` | Larger tap target for mobile nav |
-| `.pk-logo-bg` | Logo background (brand-primary) |
+| `.pk-logo-bg` | Logo gradient + glow (brand-primary/accent) |
+| `.pk-spinner` | Spinning loader (border ring, accent top); used for route and modal loading |
 
 ## Shadows and radius
 
 - **Radius** — Buttons/inputs: 12px (`rounded-lg`). Cards/panels: 16px (`rounded-xl`).
 - **Shadows** — `shadow-soft`, `shadow-card`, `shadow-elevated` in Tailwind config; used on cards, header, modals.
 
+## Scrollbars
+
+- Themed in `main.css`: thin scrollbar, dark track (`--bg`), thumb (`--surface-elevated`), hover/active use `--brand-accent`. Applied globally via `*` and `*::-webkit-scrollbar*`.
+- **Radius** — Scrollbar track and thumb use 4px rounded corners.
+
 ## Responsiveness
 
 - **Breakpoints** — Tailwind default (sm 640px, md 768px, lg 1024px, …).
 - **Header** — Nav and actions inline on md+; hamburger + slide-out menu on smaller.
 - **Touch** — Buttons/inputs min-height 44px; nav items in drawer use `.pk-nav-pill-mobile`.
-- **Background** — Subtle dot grid on body (data-panel feel).
+- **Background** — Subtle grid (line) on body using `--glow` for a data-panel feel.
 
 ## Vue components (app-specific)
 
 | Component | Role |
 |-----------|------|
-| `LogoMark` | In-app logo (no external icon lib) |
-| `AppModal` | Accessible modal (Teleport, focus, Escape, overlay) |
+| `LogoMark` | In-app logo (gradient + glow; no external icon lib) |
+| `AppModal` | Accessible modal (Teleport, focus, Escape, overlay). Optional `size="lg"` for wider dialogs. |
 | `AppTooltip` | Optional hover/focus tooltip (delay, placement) |
+| `CatalogPreviewModal` | Catalog item detail: type badge, image, ID/name, data grid; shows `.pk-spinner` while loading. |
 | `AddItemModalContent` | Add Item modal body |
 | `ImportModalContent` | Import modal body |
 | `ExportModalContent` | Export modal body |

@@ -62,6 +62,7 @@ Key variables (see `.env.example`):
 |----------|---------|-------------|
 | `APP_NAME` | Piece Keeper | App title |
 | `APP_URL` | http://localhost:3000 | Base URL |
+| `REBRICKABLE_API_KEY` | — | **Required for catalog.** Rebrickable API key for sets/parts/minifigs. Get one at [Rebrickable API v3](https://rebrickable.com/api/v3/docs/). Loaded from repo root `.env` or `apps/web/.env`. |
 | `POSTGRES_*`, `DATABASE_URL` | — | Postgres connection |
 | `REDIS_URL` | redis://localhost:6379 | Redis |
 | `MEILI_HOST` | http://localhost:7700 | Meilisearch |
@@ -86,3 +87,4 @@ Key variables (see `.env.example`):
 
 - **Vue** — Pinned to 3.4.10 via pnpm override in root `package.json` to avoid hydration/nextSibling issues.
 - **SSR** — Disabled (`ssr: false` in Nuxt config); app is client-rendered only.
+- **Catalog** — Without `REBRICKABLE_API_KEY`, the catalog page shows a message to add the key; list/detail API calls return 502 until configured.

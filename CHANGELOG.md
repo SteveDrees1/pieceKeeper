@@ -8,34 +8,31 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
-- **Brick & Blueprint theme** — Design system with Space Grotesk / Inter, CSS variables (brand, bg, surface, text, muted, border), and shared primitives (`pk-container`, `pk-card`, `pk-btn`, `pk-input`, `pk-chip`, etc.).
-- **LogoMark** — In-app logo component (no external icon lib).
-- **Sticky footer** — Full-width footer with copyright, Privacy/Terms links, and social icons (Twitter, GitHub, Instagram); responsive layout and touch targets.
-- **Responsive layout** — Mobile-first with collapsible nav drawer, responsive spacing and typography, safe-area padding for notched devices, 44px minimum touch targets.
-- **Dashboard** — Stat cards (Sets, Parts, Minifigs, Est. value), Recent activity panel, Quick actions (Search catalog, Add item, Import from file).
-- **Modals** — Add Item, Import, and Export modals with accessible `AppModal` (focus, Escape, overlay close) and placeholder content.
-- **Tooltips** — `title` on all clickable elements (nav, buttons, links, social, footer); optional `AppTooltip` component for custom hover/focus tooltips.
-- **Cursor** — `cursor: pointer` on all interactive elements (links, buttons, nav pills, `.pk-btn*`) via global CSS.
-- **Compatibility** — `compatibilityDate` in Nuxt config; Vue pinned to 3.4.10 via pnpm override to avoid hydration/nextSibling issues.
-- **README** — Project overview, tech stack, quick start, scripts, structure, UI/UX notes, and doc links.
+- **Rebrickable catalog** — Search sets, parts, and minifigs via Rebrickable API. Server proxy routes: list (`/api/catalog/sets`, `parts`, `minifigs`) and detail (`/api/catalog/sets/:set_num`, etc.). Requires `REBRICKABLE_API_KEY` in `.env`. See [Rebrickable API reference](docs/reference/rebrickable-api.md).
+- **Catalog preview modal** — Click a search result to open a detail modal (image, ID, name, type-specific fields). Database-style layout with type badge, accent bar, and data grid. Spinning loader while fetching.
+- **Futuristic theme** — Dark “data center” UI: deep blue background, electric blue accents, grid background, glowing borders and buttons. Theme tokens and shadows in `main.css` / `tailwind.config.ts`.
+- **Sticky layout** — Header and footer stay fixed; only main content scrolls. Catalog results list scrolls within its panel between header and footer.
+- **Route loading indicator** — Spinning loader over main content when navigating (e.g. nav links). Skips initial page load.
+- **Modal loading** — Catalog preview modal shows the same spinning loader (`.pk-spinner`) while detail data loads.
+- **Pagination** — Catalog uses first / prev / next / last controls with “1 of N” and even spacing (`<<` `<` `1 of 12` `>` `>>`).
+- **Scrollbar styling** — Themed scrollbars (dark track, accent thumb, hover state) in `main.css` for consistency with the UI.
+- **Design system** — Shared primitives (`pk-container`, `pk-card`, `pk-panel`, `pk-btn`, `pk-input`, `pk-chip`, `pk-spinner`, etc.), LogoMark, AppModal (with optional `size="lg"`), modals for Add Item / Import / Export.
+- **Dashboard** — Stat cards (Sets, Parts, Minifigs, Est. value), Recent activity, Quick actions. “Live” chip with accent styling.
+- **Responsive layout** — Mobile-first, collapsible nav drawer, 44px touch targets, safe-area padding.
+- **Documentation** — Architecture overview, IA, design system, local dev, Rebrickable API reference; doc index in `docs/README.md`.
 
 ### Changed
 
-- **Container** — `.pk-container` uses full viewport width with responsive padding (`px-4 sm:px-6 md:px-8`); removed `max-w-6xl` for fully responsive content.
-- **SSR** — Disabled (`ssr: false`) to prevent Vue 3.4.x hydration errors; app runs as SPA.
-- **DevTools** — Nuxt DevTools disabled in config.
-- **Pages** — Index, Catalog, Collection, and Lists refactored to use theme primitives; removed redundant scoped styles.
-- **Header** — Sticky header with LogoMark, tagline (“Track. Value. Trade.”), nav pills, and action buttons; mobile menu opens same Add Item / Import modals.
+- **Theme** — From Brick & Blueprint (light) to futuristic dark theme (electric blue on dark blue/grey).
+- **Container** — Full-width responsive padding; no max-width.
+- **SSR** — Disabled (`ssr: false`); app runs as SPA. Vue pinned to 3.4.10 via pnpm override.
+- **Catalog** — Real data from Rebrickable; catalog table fits between header and footer with internal scroll.
+- **Env** — Repo-root `.env` loaded from Nuxt config (dotenv) so `REBRICKABLE_API_KEY` works when running from `apps/web`.
 
 ### Fixed
 
-- Vue 3.4.x `nextSibling` / hydration issues mitigated via Vue 3.4.10 override and SPA mode.
-- Tailwind custom colors in `main.css` use CSS variables directly in component classes to avoid build-time `@apply` issues.
-
-### Removed
-
-- Inline and duplicate scoped CSS from app and pages in favor of shared theme primitives.
-- Max-width constraint on main content container.
+- Vue 3.4.x hydration/nextSibling issues via SPA mode and Vue 3.4.10 override.
+- Tailwind custom colors used via CSS variables in component classes to avoid `@apply` build issues.
 
 ---
 

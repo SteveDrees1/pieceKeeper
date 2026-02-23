@@ -14,11 +14,13 @@ Documentation for the Piece Keeper app: architecture, UI/UX, infra, and decision
 
 ## Quick links
 
-- [Architecture overview](architecture/overview.md) — Goals, MVP, services
-- [Information architecture](ui-ux/ia.md) — Navigation, flows, screens
-- [Design system](ui-ux/design-system.md) — Theme, components, responsiveness
-- [Local dev](infra/local-dev.md) — Stack, env, healthcheck
-- [Rebrickable API](reference/rebrickable-api.md) — Catalog data (sets, parts, minifigs) for future updates
+- [Architecture overview](architecture/overview.md) — Goals, MVP, services, structure
+- [Information architecture](ui-ux/ia.md) — Navigation, flows, layout, accessibility
+- [Design system](ui-ux/design-system.md) — Futuristic theme, components, scrollbars, responsiveness
+- [Local dev](infra/local-dev.md) — Stack, env (including `REBRICKABLE_API_KEY`), healthcheck
+- [Rebrickable API](reference/rebrickable-api.md) — Catalog proxy endpoints and usage
+
+For release history, see the root [CHANGELOG.md](../CHANGELOG.md).
 
 ## Conventions
 
