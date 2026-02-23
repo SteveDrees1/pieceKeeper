@@ -1,0 +1,22 @@
+{
+  "name": "piece-keeper",
+  "private": true,
+  "packageManager": "pnpm@9.15.4",
+  "engines": { "node": ">=20.0.0" },
+  "pnpm": {
+    "overrides": {
+      "vue": "3.4.10"
+    }
+  },
+  "scripts": {
+    "dev": "pnpm -C apps/web dev",
+    "build": "pnpm -C apps/web build",
+    "preview": "pnpm -C apps/web preview",
+    "lint": "pnpm -C apps/web lint",
+    "typecheck": "pnpm -C apps/web typecheck",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f --tail=200",
+    "health": "node ./scripts/healthcheck.mjs"
+  }
+}

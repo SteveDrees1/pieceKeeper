@@ -1,2 +1,13 @@
-# pieceKeeper
-Personal Lego DB used to keep track of all your pieces, it will also allow you to interact with other users who want to buy/sell both individual parts or sets
+# Piece Keeper
+
+LEGO inventory + catalog + pricing (optional) + marketplace (later). Start as a personal collection manager. Scale when needed.
+
+## Requirements
+- Node 20+
+- pnpm (via Corepack)
+- Docker + Docker Compose
+
+## Setup
+1) Copy env:
+```bash
+cp .env.example .env

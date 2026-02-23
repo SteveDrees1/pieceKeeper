@@ -1,0 +1,65 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: pk-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-piece_keeper}
+      POSTGRES_USER: ${POSTGRES_USER:-piece_keeper}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-piece_keeper_local}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./infra/data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-piece_keeper} -d ${POSTGRES_DB:-piece_keeper}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7
+    container_name: pk-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./infra/data/redis:/data
+    command: ["redis-server", "--appendonly", "yes"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.8
+    container_name: pk-meili
+    environment:
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY:-local_master_key_change_me}
+      MEILI_NO_ANALYTICS: "true"
+    ports:
+      - "7700:7700"
+    volumes:
+      - ./infra/data/meili:/meili_data
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:7700/health | grep -q available"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  minio:
+    image: minio/minio:latest
+    container_name: pk-minio
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minio}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minio_password_change_me}
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - ./infra/data/minio:/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:9000/minio/health/live > /dev/null 2>&1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
