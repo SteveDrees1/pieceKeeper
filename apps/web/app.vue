@@ -1,6 +1,6 @@
 <template>
   <div class="flex h-screen flex-col overflow-hidden bg-bg font-sans antialiased">
-    <header class="shrink-0 border-b border-border bg-surface/98 shadow-soft backdrop-blur-md safe-area-pad-x z-50" style="box-shadow: 0 1px 0 0 rgba(96, 165, 250, 0.08);">
+    <header class="shrink-0 border-b border-border bg-surface/98 shadow-soft shadow-header-border backdrop-blur-md safe-area-pad-x z-50">
       <div class="pk-container flex flex-wrap items-center justify-between gap-3 py-3 sm:gap-4 sm:py-3">
         <div class="flex min-w-0 flex-1 items-center gap-3 sm:flex-initial">
           <NuxtLink to="/" class="flex items-center gap-3" title="Go to Dashboard">
@@ -42,14 +42,13 @@
 
       <div
         v-if="mobileMenuOpen"
-        class="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
+        class="fixed inset-0 z-40 bg-bg/70 backdrop-blur-sm md:hidden"
         aria-hidden="true"
         @click="mobileMenuOpen = false"
       />
       <aside
         v-if="mobileMenuOpen"
-        class="fixed right-0 top-0 z-50 flex h-full w-full max-w-sm flex-col border-l border-border bg-surface shadow-elevated safe-area-pad-r md:hidden"
-        style="box-shadow: -4px 0 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(96, 165, 250, 0.06);"
+        class="fixed right-0 top-0 z-50 flex h-full w-full max-w-sm flex-col border-l border-border bg-surface shadow-elevated shadow-drawer safe-area-pad-r md:hidden"
         role="dialog"
         aria-label="Main menu"
       >
@@ -113,7 +112,7 @@
       </ClientOnly>
     </main>
 
-    <footer class="shrink-0 border-t border-border bg-surface safe-area-pad-x" role="contentinfo" style="box-shadow: 0 -1px 0 0 rgba(96, 165, 250, 0.06);">
+    <footer class="shrink-0 border-t border-border bg-surface shadow-footer-border safe-area-pad-x" role="contentinfo">
       <div class="pk-container py-4 sm:py-5">
         <div class="flex flex-nowrap items-center justify-between gap-4 text-sm">
           <div class="flex min-w-0 shrink items-center gap-4">
@@ -175,14 +174,15 @@
     </footer>
 
     <AppModal v-model="addItemOpen" labelledby="add-item-title">
-      <AddItemModalContent @close="closeAddItem" />
+      <LazyAddItemModalContent v-if="addItemOpen" @close="closeAddItem" />
     </AppModal>
     <AppModal v-model="importOpen" labelledby="import-title">
-      <ImportModalContent @close="closeImport" />
+      <LazyImportModalContent v-if="importOpen" @close="closeImport" />
     </AppModal>
     <AppModal v-model="exportOpen" labelledby="export-title">
-      <ExportModalContent @close="closeExport" />
+      <LazyExportModalContent v-if="exportOpen" @close="closeExport" />
     </AppModal>
+    <AppToaster />
   </div>
 </template>
 
@@ -192,7 +192,7 @@ const route = useRoute();
 const router = useRouter();
 const mobileMenuOpen = ref(false);
 const isRouteChanging = ref(false);
-const { addItemOpen, importOpen, exportOpen, openAddItem, openImport, openExport, closeAddItem, closeImport, closeExport } = useActionModals();
+const { addItemOpen, importOpen, exportOpen, openAddItem, openImport, closeAddItem, closeImport, closeExport } = useActionModals();
 
 router.beforeEach((_to, from) => {
   if (from.matched.length > 0) isRouteChanging.value = true;

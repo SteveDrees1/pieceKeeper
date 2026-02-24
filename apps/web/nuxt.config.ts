@@ -16,6 +16,9 @@ export default defineNuxtConfig({
 
   compatibilityDate: "2026-02-23",
 
+  // Prevent internal /nuxt/builds/latest.json (or similar) 503 and duplicate retries
+  experimental: { appManifest: false },
+
   modules: ["@nuxtjs/tailwindcss"],
 
   css: ["~/assets/css/main.css"],

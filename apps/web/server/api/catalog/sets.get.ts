@@ -18,6 +18,16 @@ export default defineEventHandler(async (event) => {
     page_size: String(pageSize),
   });
   if (search) params.set("search", search);
+  const themeId = query.theme_id != null && query.theme_id !== "" ? String(query.theme_id) : null;
+  if (themeId) params.set("theme_id", themeId);
+  const minYear = query.min_year != null && query.min_year !== "" ? Number(query.min_year) : NaN;
+  if (!Number.isNaN(minYear)) params.set("min_year", String(minYear));
+  const maxYear = query.max_year != null && query.max_year !== "" ? Number(query.max_year) : NaN;
+  if (!Number.isNaN(maxYear)) params.set("max_year", String(maxYear));
+  const minParts = query.min_parts != null && query.min_parts !== "" ? Number(query.min_parts) : NaN;
+  if (!Number.isNaN(minParts)) params.set("min_parts", String(minParts));
+  const maxParts = query.max_parts != null && query.max_parts !== "" ? Number(query.max_parts) : NaN;
+  if (!Number.isNaN(maxParts)) params.set("max_parts", String(maxParts));
 
   const url = `${REBRICKABLE_BASE}/sets/?${params.toString()}`;
   const res = await fetch(url, { headers: { Accept: "application/json" } });
@@ -31,5 +41,8 @@ export default defineEventHandler(async (event) => {
   }
 
   const data = (await res.json()) as { results?: unknown[]; count?: number; next?: string; previous?: string };
+  setResponseHeaders(event, {
+    "Cache-Control": "public, max-age=60, stale-while-revalidate=120"
+  });
   return data;
 });

@@ -18,6 +18,10 @@ export default defineEventHandler(async (event) => {
     page_size: String(pageSize),
   });
   if (search) params.set("search", search);
+  const colorId = query.color_id != null && query.color_id !== "" ? String(query.color_id) : null;
+  if (colorId) params.set("color_id", colorId);
+  const partCatId = query.part_cat_id != null && query.part_cat_id !== "" ? String(query.part_cat_id) : null;
+  if (partCatId) params.set("part_cat_id", partCatId);
 
   const url = `${REBRICKABLE_BASE}/parts/?${params.toString()}`;
   const res = await fetch(url, { headers: { Accept: "application/json" } });
@@ -31,5 +35,8 @@ export default defineEventHandler(async (event) => {
   }
 
   const data = (await res.json()) as { results?: unknown[]; count?: number; next?: string; previous?: string };
+  setResponseHeaders(event, {
+    "Cache-Control": "public, max-age=60, stale-while-revalidate=120"
+  });
   return data;
 });

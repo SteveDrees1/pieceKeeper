@@ -10,7 +10,7 @@
       @keydown.escape="close"
     >
       <div
-        class="absolute inset-0 bg-black/70 backdrop-blur-md"
+        class="absolute inset-0 bg-bg/80 backdrop-blur-md"
         aria-hidden="true"
         @click="close"
       />

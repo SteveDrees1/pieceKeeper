@@ -26,5 +26,9 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: res.status, statusMessage: text || res.statusText });
   }
 
-  return (await res.json()) as Record<string, unknown>;
+  const data = (await res.json()) as Record<string, unknown>;
+  setResponseHeaders(event, {
+    "Cache-Control": "public, max-age=300, stale-while-revalidate=600"
+  });
+  return data;
 });

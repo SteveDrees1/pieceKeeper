@@ -31,8 +31,7 @@ Open [http://localhost:3000](http://localhost:3000). The app is a SPA; backend s
 Start the stack with Docker Compose (use `docker-compose`, with a hyphen, if your setup doesn’t have the Compose V2 plugin):
 
 ```bash
-docker compose up -d
-# or: docker-compose up -d
+docker-compose up -d
 ```
 
 | Service | Port(s) | Purpose |
@@ -44,6 +43,8 @@ docker compose up -d
 
 Data is persisted in `./infra/data/<service>` (created on first run). Ensure Docker is running (e.g. Colima: `colima start`).
 
+**MinIO:** You may see repeated `resource deadlock avoided` / `.bloomcycle.bin` errors in logs; this is a known MinIO scanner bug. MinIO often still works. To avoid the noise, run only the services you need: `docker-compose up -d postgres redis meilisearch` (omit `minio`). The app does not require MinIO for current features.
+
 ## Health check
 
 From the repo root:
@@ -54,6 +55,18 @@ pnpm health
 
 Runs `scripts/healthcheck.mjs`: checks Postgres (TCP 5432), Redis (6379), Meilisearch (HTTP :7700/health), MinIO (HTTP :9000/minio/health/live). Output is OK/FAIL per service; exit code 0 only if all pass.
 
+## Using your inventory (Collection)
+
+To add and view items in **My Collection** (user inventory):
+
+1. **Start Postgres** (e.g. `docker-compose up -d` or use an existing Postgres).
+2. **Set in `.env`** (copy from `.env.example` if needed):
+   - `DATABASE_URL` — Postgres connection string (e.g. `postgresql://piece_keeper:piece_keeper_local@localhost:5432/piece_keeper`).
+   - `DEV_USER_EMAIL` — Any email (e.g. `you@example.com`). In dev there is no real login; this identifies the current “user” for collection and lists.
+3. Run schema if required (see `docs/infra/001_init.sql` or your migration flow).
+
+Without these, the Collection page shows an “Inventory needs setup” message and the add form is hidden.
+
 ## Environment
 
 Key variables (see `.env.example`):
@@ -62,8 +75,9 @@ Key variables (see `.env.example`):
 |----------|---------|-------------|
 | `APP_NAME` | Piece Keeper | App title |
 | `APP_URL` | http://localhost:3000 | Base URL |
+| `DEV_USER_EMAIL` | — | **Required for Collection/inventory.** Dev “user” email; no real auth yet. Set to any email in `.env`. |
+| `POSTGRES_*`, `DATABASE_URL` | — | **Required for Collection.** Postgres connection. |
 | `REBRICKABLE_API_KEY` | — | **Required for catalog.** Rebrickable API key for sets/parts/minifigs. Get one at [Rebrickable API v3](https://rebrickable.com/api/v3/docs/). Loaded from repo root `.env` or `apps/web/.env`. |
-| `POSTGRES_*`, `DATABASE_URL` | — | Postgres connection |
 | `REDIS_URL` | redis://localhost:6379 | Redis |
 | `MEILI_HOST` | http://localhost:7700 | Meilisearch |
 | `MEILI_MASTER_KEY` | local_master_key_change_me | Meilisearch key |

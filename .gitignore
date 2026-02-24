@@ -1,28 +1,38 @@
-# Node / JS
+# Dependencies
 node_modules/
 .pnpm-store/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
 
-# Nuxt
-.nuxt/
-.output/
-dist/
-.nitro/
-.cache/
-
-# Env
+# Env and secrets (never commit)
 .env
 .env.*
 !.env.example
 
-# OS / IDE
+# Build and cache
+dist/
+.nuxt/
+.output/
+.nitro/
+.cache/
+.data/
+*.tsbuildinfo
+
+# Logs (may contain sensitive data)
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Test
+coverage/
+
+# OS
 .DS_Store
 Thumbs.db
+
+# IDE (optional: remove to share workspace settings)
 .idea/
 .vscode/
 
-# Docker data
+# Docker / local data
 infra/data/

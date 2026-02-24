@@ -8,26 +8,16 @@ export default defineEventHandler(async (event) => {
   }
 
   const query = getQuery(event);
-  const search = (query.search as string)?.trim() || "";
   const page = Math.max(1, Number(query.page) || 1);
-  const pageSize = Math.min(100, Math.max(1, Number(query.page_size) || 20));
+  const pageSize = Math.min(1000, Math.max(1, Number(query.page_size) || 500));
 
   const params = new URLSearchParams({
     key,
     page: String(page),
     page_size: String(pageSize),
   });
-  if (search) params.set("search", search);
-  const inThemeId = query.in_theme_id != null && query.in_theme_id !== "" ? String(query.in_theme_id) : null;
-  if (inThemeId) params.set("in_theme_id", inThemeId);
-  const inSetNum = (query.in_set_num as string)?.trim() || "";
-  if (inSetNum) params.set("in_set_num", inSetNum);
-  const minParts = query.min_parts != null && query.min_parts !== "" ? Number(query.min_parts) : NaN;
-  if (!Number.isNaN(minParts)) params.set("min_parts", String(minParts));
-  const maxParts = query.max_parts != null && query.max_parts !== "" ? Number(query.max_parts) : NaN;
-  if (!Number.isNaN(maxParts)) params.set("max_parts", String(maxParts));
 
-  const url = `${REBRICKABLE_BASE}/minifigs/?${params.toString()}`;
+  const url = `${REBRICKABLE_BASE}/themes/?${params.toString()}`;
   const res = await fetch(url, { headers: { Accept: "application/json" } });
 
   if (!res.ok) {
@@ -40,7 +30,7 @@ export default defineEventHandler(async (event) => {
 
   const data = (await res.json()) as { results?: unknown[]; count?: number; next?: string; previous?: string };
   setResponseHeaders(event, {
-    "Cache-Control": "public, max-age=60, stale-while-revalidate=120"
+    "Cache-Control": "public, max-age=300, stale-while-revalidate=600",
   });
   return data;
 });

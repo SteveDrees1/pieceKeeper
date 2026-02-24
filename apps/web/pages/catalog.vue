@@ -162,7 +162,7 @@
       </div>
     </div>
 
-    <CatalogPreviewModal
+    <LazyCatalogPreviewModal
       v-model="previewOpen"
       :detail-type="previewType"
       :detail-id="previewId"
@@ -208,6 +208,11 @@ const {
 } = useCatalogSearch(searchQuery, catalogType);
 
 const rebrickableConfigured = computed(() => !error.value?.message?.includes("API key not configured"));
+
+const { showToast } = useToaster();
+watch(error, (err) => {
+  if (err?.message) showToast(err.message, "error");
+});
 
 const previewOpen = ref(false);
 const previewType = ref<CatalogType | null>(null);

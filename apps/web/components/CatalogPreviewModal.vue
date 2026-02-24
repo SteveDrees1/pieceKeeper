@@ -90,7 +90,20 @@
               </template>
             </div>
 
-            <p class="catalog-preview__source pk-subtle">Catalog data from Rebrickable</p>
+            <div class="mt-4 flex flex-wrap items-center gap-3 border-t border-[var(--preview-border)] pt-4">
+              <button
+                type="button"
+                class="pk-btn-primary"
+                :disabled="addToCollectionSending"
+                title="Add this item to your collection"
+                @click="addToCollection"
+              >
+                {{ addToCollectionSending ? "Adding…" : "Add to collection" }}
+              </button>
+              <p class="pk-subtle text-xs">Saves to your inventory with qty 1.</p>
+            </div>
+
+            <p class="catalog-preview__source pk-subtle mt-4">Catalog data from Rebrickable</p>
           </template>
         </template>
       </div>
@@ -146,7 +159,7 @@ const detailError = ref<{ message?: string } | null>(null);
 
 watch(
   () => [props.detailType, props.detailId] as const,
-  async ([type, id]: [CatalogType | null, string | null]) => {
+  async ([type, id]: readonly [CatalogType | null, string | null]) => {
     if (!type || !id) {
       detail.value = null;
       detailError.value = null;
@@ -209,6 +222,42 @@ const hasAttributes = computed(() => {
   if (props.detailType === "minifigs") return (d as MinifigDetail).num_parts != null;
   return false;
 });
+
+const { showToast } = useToaster();
+const addToCollectionSending = ref(false);
+
+function catalogTypeToItemType(): "set" | "part" | "minifig" {
+  const t = props.detailType;
+  if (t === "sets") return "set";
+  if (t === "parts") return "part";
+  if (t === "minifigs") return "minifig";
+  return "set";
+}
+
+async function addToCollection() {
+  if (!props.detailId?.trim() || !props.detailType) return;
+  addToCollectionSending.value = true;
+  try {
+    await $fetch("/api/collection", {
+      method: "POST",
+      body: {
+        item_type: catalogTypeToItemType(),
+        item_id: props.detailId.trim(),
+        qty: 1,
+        condition: "unknown",
+      },
+    });
+    showToast("Added to collection", "success");
+    const { refresh: refreshCollection } = useFetch<unknown[]>("/api/collection", { key: "collection" });
+    await refreshCollection();
+  } catch (e: unknown) {
+    const err = e as { data?: { statusMessage?: string }; message?: string };
+    const msg = err?.data?.statusMessage ?? err?.message ?? "Failed to add to collection";
+    showToast(msg, "error");
+  } finally {
+    addToCollectionSending.value = false;
+  }
+}
 </script>
 
 <style scoped>

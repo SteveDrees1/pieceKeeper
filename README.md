@@ -81,7 +81,7 @@ Get a key at [Rebrickable API v3](https://rebrickable.com/api/v3/docs/). Without
 **3. Start services (optional)**
 
 ```bash
-docker compose up -d
+docker-compose up -d
 pnpm health
 ```
 

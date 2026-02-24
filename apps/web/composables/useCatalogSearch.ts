@@ -39,6 +39,7 @@ export function useCatalogSearch(searchQuery: Ref<string>, catalogType: Ref<Cata
   const { data, pending, error, refresh } = useFetch<CatalogResponse>(
     () => `/api/catalog/${catalogType.value}`,
     {
+      key: () => `catalog-${catalogType.value}-${searchQuery.value}-${page.value}`,
       query: {
         search: searchQuery,
         page,
@@ -46,6 +47,8 @@ export function useCatalogSearch(searchQuery: Ref<string>, catalogType: Ref<Cata
       },
       watch: [searchQuery, catalogType, page],
       immediate: true,
+      // Avoid duplicate in-flight requests; only one request per key at a time
+      dedupe: "defer",
     }
   );
 

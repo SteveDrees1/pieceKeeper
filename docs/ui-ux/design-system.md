@@ -28,6 +28,9 @@ Defined in `:root` in `main.css` as RGB triplets (for alpha support). Dark palet
 | `--brand-accent` | #60a5fa | Links, focus, nav active, glow |
 | `--brand-highlight` | #38bdf8 | Highlights |
 | `--glow` | #60a5fa | Glow shadows (box-shadow) |
+| `--warning` | #f59e0b | Warning alerts, setup hints |
+| `--error` | #ef4444 | Error text, error toasts |
+| `--success` | #22c55e | Success toasts |
 
 ## Layout
 
@@ -58,6 +61,8 @@ Defined in `main.css`; use Tailwind for spacing and layout alongside these.
 | `.pk-nav-pill-mobile` | Larger tap target for mobile nav |
 | `.pk-logo-bg` | Logo gradient + glow (brand-primary/accent) |
 | `.pk-spinner` | Spinning loader (border ring, accent top); used for route and modal loading |
+| `.pk-alert-warning` | Warning callout (border/background from `--warning`) |
+| `.pk-alert-error` | Error message text (uses `--error`) |
 
 ## Shadows and radius
 
@@ -69,12 +74,15 @@ Defined in `main.css`; use Tailwind for spacing and layout alongside these.
 - Themed in `main.css`: thin scrollbar, dark track (`--bg`), thumb (`--surface-elevated`), hover/active use `--brand-accent`. Applied globally via `*` and `*::-webkit-scrollbar*`.
 - **Radius** — Scrollbar track and thumb use 4px rounded corners.
 
-## Responsiveness
+## Responsiveness and accessibility
 
 - **Breakpoints** — Tailwind default (sm 640px, md 768px, lg 1024px, …).
 - **Header** — Nav and actions inline on md+; hamburger + slide-out menu on smaller.
 - **Touch** — Buttons/inputs min-height 44px; nav items in drawer use `.pk-nav-pill-mobile`.
 - **Background** — Subtle grid (line) on body using `--glow` for a data-panel feel.
+- **Reduced motion** — `prefers-reduced-motion: reduce` supported globally; animations and transitions are minimized when the user prefers reduced motion.
+- **Tables** — Use `<th scope="col">` for column headers.
+- **Semantic alerts** — `.pk-alert-warning`, `.pk-alert-error` for setup and error messages using design tokens.
 
 ## Vue components (app-specific)
 

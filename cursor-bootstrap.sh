@@ -136,9 +136,9 @@ write_file "package.json" <<EOF
     "preview": "pnpm -C apps/web preview",
     "lint": "pnpm -C apps/web lint",
     "typecheck": "pnpm -C apps/web typecheck",
-    "docker:up": "docker compose up -d",
-    "docker:down": "docker compose down",
-    "docker:logs": "docker compose logs -f --tail=200",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f --tail=200",
     "health": "node ./scripts/healthcheck.mjs"
   }
 }
@@ -554,7 +554,7 @@ write_file "docs/infra/local-dev.md" <<'EOF'
 # Local Dev
 
 ## Stack
-`docker compose up -d` starts:
+`docker-compose up -d` starts:
 - Postgres :5432
 - Redis :6379
 - Meilisearch :7700
